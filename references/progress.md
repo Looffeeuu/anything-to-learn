@@ -39,7 +39,7 @@ A `durable` item that is later missed drops back to `shaky`.
 
 Pick 1–2 items, in this priority:
 
-1. `misconception`
+1. `misconception` (and open entries in `misconceptions.md`, asked from a new angle)
 2. `gap` / `shaky` last seen ≥1 day ago
 3. `new` from the previous session
 4. `solid` not seen for the longest time (≥ about a week)
@@ -56,16 +56,14 @@ the learner.
 
 Turn on only when the learner names an exam, quiz, or deadline. Record it in the header.
 
-1. **Collect what's tested.** Ask for past papers, the syllabus, or what the teacher
-   said is in scope — if they have any. Weight those heavily.
-2. **Rank** every capability by roughly *(how weak) × (how likely it's tested) ×
-   (how quickly it can be fixed)*. Show the learner the top of that list, short:
-   "With 5 days left, here's where the points are: …".
-3. **Sessions become mixed practice** in exam style and exam format (same question
-   types, same notation), interleaving topics — on an exam, choosing the method is
-   part of the test.
-4. **One mock** under timed conditions near the end, if the learner wants it, followed
-   by a review that focuses on the misses.
+1. **Build or refresh the exam profile** (`exam-backsolve.md` Steps 1–2): past papers,
+   homework, the teacher's hints, scope.
+2. **Points-per-minute plan** (Step 3): rank by exam value × gap ÷ time to fix. Show
+   the top of the list against the learner's time budget; say what's deprioritized.
+3. **Sessions become isomorphic practice** (Step 4) in exam format and notation,
+   interleaving topics — on an exam, choosing the method is part of the test.
+4. **One mock** under timed conditions near the end, if the learner wants it, debriefed
+   by cause of lost points (Step 5).
 5. The day before: a light pass over the highest-weight items, not new material.
 
 Sprint mode ends after the exam date; mention once, after it, that weak items remain in
