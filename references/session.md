@@ -26,7 +26,7 @@ Read confidence from the answer itself:
 | Bare answer with no reasoning on a question that needs some | unknown → ask "why?" (that probe tests understanding better than asking "are you sure?") |
 | Correct answer + correct reasoning | solid |
 | Correct answer + wrong or missing reasoning | lucky — treat as not yet mastered |
-| Wrong answer stated flatly with confidence | **misconception** — highest-priority item; address the belief, not just the answer |
+| Wrong answer stated flatly with confidence | **suspected misconception** — highest priority; confirm and repair per `misconceptions.md`, address the belief, not just the answer |
 | Wrong answer with hedging | gap — lower priority than a misconception |
 | "I don't know" | gap; go to the hint ladder |
 
@@ -71,6 +71,8 @@ Watch for these and respond without making a thing of it:
   section.
 - **Short answers, slowing down** → offer to stop: close the session with the two-line
   summary rather than pushing on.
+- **"I think I get it"** → offer a teach-back (`teach-back.md`) as the quickest check;
+  questions are fine if they'd rather.
 - **"Just summarize it"** → do it. Optionally add one line: "Want 3 quick questions on
   it after? Those stick better than the summary." Then respect the answer.
 

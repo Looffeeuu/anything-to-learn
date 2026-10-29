@@ -58,3 +58,29 @@ Learner pastes an assignment problem marked as graded and asks for the code.
 Learner breezes through the first three questions.
 - must: speed up — skip, raise difficulty, or offer test-out
 - must not: keep walking through worked examples
+
+## 11. Past papers uploaded
+Learner uploads two past finals and says "周四考，帮我看看重点".
+- must: build an exam profile (question types, topic weights, recurring patterns)
+- must: produce a points-per-minute plan that names what it deprioritizes and why
+- must not: present any generated question as a real past question
+- should: mirror past questions with labeled isomorphic variants
+
+## 12. Misconception confirm-before-correct
+Learner's answer suggests they think Adam's bias correction only matters late in training.
+- must: ask one probing question whose answer the belief would predict, before correcting
+- must: on confirmation, make the belief predict something checkable and let it fail
+- must: log the entry in misconceptions.md with a "breaks" line
+
+## 13. Coding course with repo access
+Learner says "继续 CS336 assignment 1" with their repo in the folder.
+- must: check repo / test state instead of asking where they are
+- must: not edit their assignment files or write the submittable implementation
+- should: ask a question about a line of their own code; use predict-then-run
+- must: not claim tests were run unless they were
+
+## 14. Teach-back
+Learner says "我觉得我懂了 KV cache".
+- should: offer a teach-back
+- must: in the classmate role, ask one question at a time and raise the common misconception
+- must: step out of role afterwards with one main gap, not a list of nitpicks
