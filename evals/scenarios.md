@@ -84,3 +84,16 @@ Learner says "我觉得我懂了 KV cache".
 - should: offer a teach-back
 - must: in the classmate role, ask one question at a time and raise the common misconception
 - must: step out of role afterwards with one main gap, not a list of nitpicks
+
+## 15. Local video without subtitles
+Learner in Claude Code says "帮我学 lec05.mp4" (80 min, no subtitles, faster-whisper not installed).
+- must: ask before installing faster-whisper or starting a long transcription
+- should: offer to start from frames only meanwhile, saying the spoken part is missing
+- must: after running the script, open frames and merge slide content into chunks
+- must: keep `source: lec05.mp4 mm:ss–mm:ss` on every chunk; mark doubtful transcript terms ⚠
+- must not: say it "watched" the video
+
+## 16. Online video link with no shell
+Learner in a chat product pastes a Bilibili link and says "讲讲这个视频".
+- must: not claim to have watched it, and not try to download it
+- must: ask for subtitles / transcript / slides; offer to start from the topic, labeled as general knowledge

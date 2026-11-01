@@ -1,4 +1,4 @@
-<!-- anything-to-learn v0.2 · 合并单文件版，供不支持 Agent Skills 的平台粘贴使用。由 SKILL.md + references/ 生成。 -->
+<!-- anything-to-learn v0.3 · 合并单文件版，供不支持 Agent Skills 的平台粘贴使用。由 SKILL.md + references/ 生成；scripts/ 中的视频脚本不包含在内。 -->
 
 # Anything to Learn
 
@@ -55,6 +55,9 @@ what they trade away, and move on. Their time, their call.
 
 Whatever the learner brings becomes one `source-pack.md` with provenance on every chunk
 (file + page / slide / timestamp). Follow Appendix A for each input type.
+For lecture videos, when you can run commands, `scripts/video_to_source.py` extracts
+subtitles or a local Whisper transcript plus a frame per slide change (ask before long
+runs or installs; see Appendix A § Video).
 Past exams and problem sets go in their own section — they feed exam back-solving.
 
 Then show a **one-screen table of contents** of what was extracted, flag anything
@@ -134,7 +137,8 @@ language; keep technical terms in the form they'll see on the exam.
   questions are always labeled as generated.
 - For graded coursework, don't write submittable solutions or edit the learner's
   assignment files to make tests pass; teach toward them.
-- Never claim to have run code, watched a video, or read a file you didn't.
+- Never claim to have run code, watched a video, or read a file you didn't. Reading a
+  video's transcript and frames is not watching it — say what you actually had.
 - Score predictions are estimates; never promise a grade.
 
 ---
@@ -176,13 +180,65 @@ figures: [S1-f1] diagram of the attention block — <one-line description of wha
 | **Slides (.pptx / Keynote export / PDF of slides)** | Text per slide + speaker notes; render slides whose meaning lives in a diagram | Slides are fragments: the lecture's connective reasoning is often missing — note gaps and fill them as `origin: tutor` |
 | **Word / Markdown / plain text** | Direct | — |
 | **Screenshots, photos, whiteboard** | Read the image; transcribe formulas to LaTeX | Handwriting: list the transcribed formulas back to the learner for confirmation before teaching from them |
-| **Video file** | Use subtitles if present (`.srt`/`.vtt`, or embedded tracks). Otherwise extract the audio and transcribe if a speech-to-text tool is available; extract frames at slide changes to capture what's on screen | Long videos: chunk by topic shifts, keep timestamps (`source: lec5.mp4 23:10–31:40`) |
+| **Video file** | If you can run commands, use `scripts/video_to_source.py` (see **Video** below). Otherwise: subtitles if present, a transcript if the learner has one, and screenshots they send | Keep timestamps (`source: lec5.mp4 23:10–31:40`); say plainly what was missing (no audio transcript, no frames) |
 | **Video link (YouTube, course site)** | You usually cannot watch or download it. Ask for the transcript (many course sites and YouTube offer one), subtitle file, or the slides used in the lecture | Do not pretend to have watched it |
-| **Audio / recording** | Transcribe if a tool is available; otherwise ask for a transcript | Speaker asides vs. content |
+| **Audio / recording** | Same script — it handles audio-only files (subtitles or Whisper, no frames); otherwise ask for a transcript | Speaker asides vs. content |
 | **Web page / course site** | Fetch the page text | Paywalls and JS-only pages may fail — ask the learner to paste or save as PDF |
 | **Code / repo / notebook** | Read the files; chunk by function or concept, not by file | Generated or vendored code — skip it |
 | **Just a topic** | Build from general knowledge plus looked-up sources; every chunk `origin: tutor` or with its URL | Note that there is no "official" version to be examined against |
 | **Past exams / problem sets** | Keep separate under `## Exam material`; they calibrate sprint mode | These show what the course actually tests — weight them heavily |
+
+### Video
+
+The skill ships an optional helper, `scripts/video_to_source.py` (Python standard
+library + ffmpeg; local Whisper only when a video has no subtitles). It runs entirely on
+the learner's machine.
+
+```bash
+python <skill-dir>/scripts/video_to_source.py lecture05.mp4 [--lang zh] [--subs file.srt]
+```
+
+What it does, in order:
+
+1. **Text**: a subtitle file passed with `--subs`, else a sidecar `.srt`/`.vtt` with the
+   same name, else an embedded subtitle track, else local speech-to-text with
+   faster-whisper / openai-whisper if installed. Subtitles always win: they are faster
+   and usually more accurate than machine transcription.
+2. **Frames**: one frame each time the picture changes enough (new slide, new board,
+   a slide that built up bullet by bullet), plus one every 3 minutes of no change.
+3. **Output** in `<video>_source/`: `video-source.md` (chunks split at slide changes,
+   each with its time range, the frames shown, and the words spoken), `transcript.srt`,
+   `frames/*.jpg`, `meta.json`.
+
+Then build the source pack from it:
+
+- Open the frames and read them — slides carry the formulas, definitions and figures
+  the transcript only refers to ("as you can see here…"). Merge each frame's content
+  into its chunk.
+- Re-chunk by idea where needed; keep `source: <video> mm:ss–mm:ss` on every chunk.
+- Machine transcripts mishear technical terms and symbols ("soft max", "KV cash"). Fix
+  them from the slides where the slide shows the term; otherwise mark `⚠ heard as …`.
+- If the script reports no text source, the spoken explanation is missing. Say so in
+  the confirmation step and offer: subtitles, a transcript, or `pip install faster-whisper`.
+
+Before running it:
+
+- **Ask first** for long videos or the first Whisper run — transcription of a 90-minute
+  lecture can take minutes to an hour depending on the machine, and the first run
+  downloads a speech model (hundreds of MB for `small`, more for `medium`/`large-v3`).
+- **Missing tools**: if ffmpeg is not installed, tell the learner the one-line install
+  for their OS (the script prints it). Never install software without asking.
+- **No shell** (plain chat): skip the script; ask for subtitles, a transcript, or
+  screenshots of key slides.
+- **Online videos**: the script takes local files only. Ask the learner for the
+  platform's subtitle/transcript export or the lecture slides; don't try to download
+  videos from sites.
+
+Useful options: `--lang zh` (also nudges Whisper toward Simplified Chinese), `--model
+medium` (better accuracy, slower), `--prompt "CS336, KV cache, FlashAttention"` (course
+terms help Whisper spell them), `--every 60` (fixed interval for videos where scene
+detection over- or under-fires, e.g. a camera filming a whiteboard), `--no-transcribe`
+(frames only).
 
 ### The confirmation step
 
@@ -192,7 +248,7 @@ After building the pack, show the learner one screen:
 I extracted 23 chunks from 3 files:
   lecture03.pdf  — attention, multi-head, positional encoding (S1–S9)
   board.jpg      — derivation of softmax gradient (S10)  ⚠ 2 symbols unclear
-  lec3.mp4       — no subtitles; I used the slides only, the spoken parts are missing
+  lec3.mp4       — 18 slides + Whisper transcript (V1–V12); 3 terms unclear ⚠
 Anything wrong or missing before we start?
 ```
 

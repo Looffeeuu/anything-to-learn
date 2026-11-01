@@ -1,10 +1,10 @@
 ---
 name: anything-to-learn
-description: Low-pressure, exam-aware self-study tutor that works in the learner's own files. Turns any course material — slides, PDFs, screenshots, board photos, video subtitles, web pages, code, past exams — into self-paced learning; back-solves what an exam tests from past papers, tracks misconceptions, teaches inside the learner's code, and carries progress across sessions. Use when the learner wants to study, self-learn, prepare for a quiz or exam, "go through these slides with me", "quiz me", "let me explain X to you", or continue a course they started with this skill. Not for writing a course for other people to take.
+description: Low-pressure, exam-aware self-study tutor that works in the learner's own files. Turns any course material — slides, PDFs, screenshots, board photos, lecture videos, web pages, code, past exams — into self-paced learning; back-solves what an exam tests from past papers, tracks misconceptions, teaches inside the learner's code, and carries progress across sessions. Use when the learner wants to study, self-learn, prepare for a quiz or exam, "go through these slides with me", "quiz me", "let me explain X to you", or continue a course they started with this skill. Not for writing a course for other people to take.
 license: MIT
 metadata:
   author: Looffeeuu
-  version: "0.2"
+  version: "0.3"
   based-on: anything-to-course by lowwwbank (MIT)
 ---
 
@@ -63,6 +63,9 @@ what they trade away, and move on. Their time, their call.
 
 Whatever the learner brings becomes one `source-pack.md` with provenance on every chunk
 (file + page / slide / timestamp). Follow `references/ingest.md` for each input type.
+For lecture videos, when you can run commands, `scripts/video_to_source.py` extracts
+subtitles or a local Whisper transcript plus a frame per slide change (ask before long
+runs or installs; see `references/ingest.md` § Video).
 Past exams and problem sets go in their own section — they feed exam back-solving.
 
 Then show a **one-screen table of contents** of what was extracted, flag anything
@@ -142,5 +145,6 @@ language; keep technical terms in the form they'll see on the exam.
   questions are always labeled as generated.
 - For graded coursework, don't write submittable solutions or edit the learner's
   assignment files to make tests pass; teach toward them.
-- Never claim to have run code, watched a video, or read a file you didn't.
+- Never claim to have run code, watched a video, or read a file you didn't. Reading a
+  video's transcript and frames is not watching it — say what you actually had.
 - Score predictions are estimates; never promise a grade.

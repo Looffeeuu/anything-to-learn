@@ -2,7 +2,7 @@
 
 **不想听课？把课件丢给它，按考试要的学。**
 
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue.svg) ![Version](https://img.shields.io/badge/version-0.2-orange.svg) ![Platforms](https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20Cursor%20%C2%B7%20Copilot%20%C2%B7%20OpenCode-8A2BE2.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue.svg) ![Version](https://img.shields.io/badge/version-0.3-orange.svg) ![Platforms](https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20Cursor%20%C2%B7%20Copilot%20%C2%B7%20OpenCode-8A2BE2.svg)
 
 anything-to-learn 是一个面向自主学习者的 Agent Skill。它把讲义、PPT、截图、板书照片、视频字幕、代码仓库乃至往年试卷整理成**可溯源的学习材料**，再以考试目标为约束，按你的节奏一对一教学。它记得你学到哪、哪里没懂，但不布置作业，也不推送复习计划。
 
@@ -28,6 +28,7 @@ anything-to-learn 是一个面向自主学习者的 Agent Skill。它把讲义�
 - [它和其他工具有什么不同](#它和其他工具有什么不同)
 - [安装](#安装)
 - [开始第一次学习](#开始第一次学习)
+- [视频解析](#视频解析)
 - [工作原理](#工作原理)
 - [学习科学依据](#学习科学依据)
 - [它不会做的事](#它不会做的事)
@@ -64,7 +65,8 @@ anything-to-learn 是一个面向自主学习者的 Agent Skill。它把讲义�
 
 - 一个支持 [Agent Skills](https://agentskills.io) 格式的 AI 助手或 agent（见下表），或任意能设置自定义指令的聊天产品。
 - 用命令行安装时需要 Git；用一键安装时需要 Node.js（`npx`）。
-- skill 本身是纯 Markdown：没有脚本、没有依赖、不需要 API key 或联网。
+- skill 主体是纯 Markdown：不需要 API key 或联网。
+- 可选：处理视频需要 Python 3.8+ 和 [ffmpeg](https://ffmpeg.org/download.html)；视频没有字幕时，还需要本地语音识别 `pip install faster-whisper`。见[视频解析](#视频解析)。
 
 ### 平台速查
 
@@ -220,11 +222,12 @@ ChatGPT、DeepSeek、Kimi、豆包等网页聊天产品没有 skill 文件夹，
 | ChatGPT | 新建 GPT 的 Instructions，或 Project 的指令 |
 | 其他聊天产品 | 自定义指令 / 智能体设定 / 系统提示；没有的话，每次对话开头粘贴 |
 
-这种方式能用，但有三点限制：
+这种方式能用，但有四点限制：
 
 - **进度不会自动保存**。每次结束时它会给你一段进度摘要，下次开头粘贴回去即可接上。
 - **"在你的代码里学"基本不可用**，因为它需要读文件、跑测试，只有 agent 类工具能做到。
-- **材料识别取决于模型**。扫描版 PDF、板书照片、视频需要模型能看图、读文件。
+- **材料识别取决于模型**。扫描版 PDF、板书照片需要模型能看图、读文件。
+- **视频脚本无法运行**。请提供字幕、讲稿或关键页截图。
 
 ### 验证与更新
 
@@ -261,6 +264,35 @@ git -C ~/.agents/skills/anything-to-learn pull    # 换成你的安装目录
 如果助手没有自动调用这个 skill，在开头加一句"用 anything-to-learn"。
 
 学习过程中随时可以说：**"这个我会了"**（两三道快测，过了就跳）、**"直接告诉我"**（给答案）、**"我只有 15 分钟"**、**"慢一点"**、**"难一点"**、**"考试会考什么？"**。
+
+## 视频解析
+
+在能运行命令的 agent 里（Claude Code、Codex CLI、Gemini CLI、Cursor 等），skill 会用自带的 [`scripts/video_to_source.py`](scripts/video_to_source.py) 处理本地视频，全程在你的电脑上运行，不上传任何内容：
+
+1. **文字**：优先用字幕，依次查找指定的字幕文件、同名 `.srt` / `.vtt`、视频内嵌字幕轨；都没有时，用本地 Whisper 转写语音。
+2. **画面**：每当画面明显变化（换幻灯片、换板书、要点逐条出现）就截一帧，让 AI 读出幻灯片上的公式和图。
+3. **输出**：按幻灯片切换分段的 `video-source.md`，每段带时间范围、对应截图和讲解原话。
+
+```bash
+# 安装依赖（一次）
+brew install ffmpeg            # macOS；Ubuntu: sudo apt install ffmpeg；Windows: winget install ffmpeg
+pip install faster-whisper     # 只有无字幕视频才需要
+
+# 一般不用手动运行，agent 会自己调用；也可以单独用：
+python scripts/video_to_source.py lecture05.mp4 --lang zh
+python scripts/video_to_source.py lecture05.mp4 --subs lecture05.srt
+python scripts/video_to_source.py lecture05.mp4 --no-transcribe      # 只截图
+```
+
+| 视频情况 | 效果 |
+|---|---|
+| 有字幕（外挂或内嵌） | 最快最准，几秒到几十秒 |
+| 无字幕，已装 faster-whisper | 可用；首次运行会下载语音模型，90 分钟课程转写需数分钟到一小时，取决于电脑性能。专业术语可能听错，AI 会用幻灯片内容校正 |
+| 无字幕，未装语音识别 | 只有幻灯片截图，缺讲解部分，AI 会明确告诉你 |
+| 在线链接（B 站、YouTube） | 不下载在线视频；请导出平台字幕或讲稿，或提供课件 |
+| 网页聊天产品 | 无法运行脚本；请提供字幕、讲稿或关键页截图 |
+
+中文课程建议加 `--lang zh`，会引导转写输出简体中文；加 `--prompt "课程名, 专业术语"` 能提高术语识别准确率。
 
 ## 工作原理
 
@@ -304,6 +336,7 @@ git -C ~/.agents/skills/anything-to-learn pull    # 换成你的安装目录
 - 不编造事实、公式、引用或往年真题；生成的练习题一律标注为生成
 - 不替你写计分作业的提交答案，也不改你的作业文件让测试通过
 - 不假装看过它没看过的视频、读过它没读的文件、跑过它没跑的代码
+- 不下载在线视频，不在没问过你的情况下安装软件或运行耗时很长的转写
 - 不承诺分数，考试预测只是估计
 - 不推送复习提醒，不布置作业
 
@@ -322,8 +355,10 @@ anything-to-learn/
 │   ├── in-your-code.md         # 在学习者自己的代码和文件里学习
 │   ├── teach-back.md           # 反向讲授
 │   └── principles.md           # 学习科学依据（精简版）
+├── scripts/
+│   └── video_to_source.py      # 可选：视频 → 字幕/转写 + 幻灯片截图 + 分段文字稿
 ├── evals/
-│   └── scenarios.md            # 14 个模拟学习者测试场景
+│   └── scenarios.md            # 16 个模拟学习者测试场景
 ├── dist/
 │   └── anything-to-learn-single.md   # 合并单文件版，供不支持 skill 的平台粘贴
 ├── README.md
@@ -332,11 +367,13 @@ anything-to-learn/
 
 ## 状态与路线图
 
-当前为 **v0.2 早期版本**，正在用 Stanford CS336 自学做第一轮实测。
+当前为 **v0.3 早期版本**，正在用 Stanford CS336 自学做第一轮实测。
 
 - [x] 任意格式材料摄取与溯源
 - [x] 隐式置信度推断、提示阶梯、热身题
 - [x] 应试反推、误解地图、代码内学习、反向讲授
+- [x] 本地视频解析（字幕 / Whisper 转写 + 幻灯片截图）
+- [ ] 用真实课程录像测试视频解析（目前只用合成视频测过）
 - [ ] 在 Claude Code、Codex CLI、Cursor 上跑通全部 eval 场景
 - [ ] 补充一份真实学习记录作为示例
 - [ ] 理科之外的课程（文科阅读、语言学习）实测
