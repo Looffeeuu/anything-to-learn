@@ -86,4 +86,7 @@ the 4× in the MLP comes from.
 Next time: we'd start on FLOPs per token — or pick up wherever you want.
 ```
 
-Then update `progress.md`.
+Then update the knowledge map (`knowledge-map.md` § Updating at the end of a session)
+and tell the learner in one line what changed, e.g. 「总脉络已更新：新增「欲望 vs 要求」，修订
+「镜像阶段」，练习 +3。」 Then update `progress.md` silently. Never produce a separate
+per-session summary table — the map is the summary.

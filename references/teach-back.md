@@ -46,7 +46,7 @@ most of the talking.
 ## Scoring (silent, into `progress.md`)
 
 Check the explanation for the capability's **key causal links** (list them before the
-teach-back, from the learning map). For each: present and correct / present but wrong /
+teach-back, from the map node's tutor comment). For each: present and correct / present but wrong /
 missing. That gives item statuses directly. Teach-back evidence counts as strong
 evidence: a correct, unprompted causal explanation is good grounds for `solid`.
 

@@ -15,7 +15,7 @@ the course involves code. Without those tools, fall back to code the learner pas
 | **Debugging as teaching** | On a failure, don't fix it. Read the trace with the learner and climb the hint ladder: where does it fail → what does the code assume there → what is actually true there. |
 | **Experiments for concepts** | Turn a concept into a 10-line experiment ("change the scaling to 1/d instead of 1/√d and plot the softmax entropy"). Seeing it beats being told. |
 | **Misconception checks in code** | When a misconception is suspected, the cheapest confirmation is often code: "write what you think the masked softmax does; let's check row sums." |
-| **Progress files in the repo** | Keep `progress.md` / `misconceptions.md` in a `study/` folder of their repo (gitignored if they prefer), so the context travels with the project. |
+| **Study files in the repo** | Keep the map, cards and `progress.md` / `misconceptions.md` in a `study/` folder of their repo (gitignored if they prefer), so the context travels with the project. Code walkthroughs go to `study/cases/`. |
 
 ## Session shape for a coding course
 

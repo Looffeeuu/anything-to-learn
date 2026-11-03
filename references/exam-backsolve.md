@@ -19,14 +19,14 @@ Ask once, in one message, for whatever exists. Don't block on missing pieces.
 | Homework / problem sets | high | teachers reuse their own problem shapes |
 | Scope statement / syllabus | medium | defines the boundary, not the weights |
 | Time spent in lecture per topic (from slides/transcript length) | low | rough prior when nothing else exists |
-| Nothing at all | — | say so; fall back to the learning map and label the plan as a guess |
+| Nothing at all | — | say so; fall back to the knowledge map and label the plan as a guess |
 
 Never invent past-exam content. If the learner describes a question from memory, record
 it as `source: learner recollection`.
 
 ## Step 2 — Build the exam profile (`exam-profile.md`)
 
-Tag every past question with: topic (→ learning-map capability), question type, points,
+Tag every past question with: topic (→ map node), question type, points,
 and the *skill it actually demands* (recall a definition / run a procedure / derive /
 choose a method / explain / debug / design).
 

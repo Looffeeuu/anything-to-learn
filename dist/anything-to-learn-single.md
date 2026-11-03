@@ -1,4 +1,4 @@
-<!-- anything-to-learn v0.3 · 合并单文件版，供不支持 Agent Skills 的平台粘贴使用。由 SKILL.md + references/ 生成；scripts/ 中的视频脚本不包含在内。 -->
+<!-- anything-to-learn v0.4 · 合并单文件版，供不支持 Agent Skills 的平台粘贴使用。由 SKILL.md + references/ 生成；scripts/ 中的视频脚本不包含在内。 -->
 
 # Anything to Learn
 
@@ -24,7 +24,10 @@ Plenty of tools turn material into lessons and quizzes. This skill's bets are el
    tests as the judge, debugging as teaching. → Appendix G
 4. **Teach-back** — the learner explains, the tutor plays a sharp classmate who missed
    the lecture. → Appendix H
-5. **Traceable** — every taught claim points to its source chunk (slide, page, minute),
+5. **One living knowledge map** — the learner keeps a single framework document that
+   grows each session, with concepts, practice and cases linked off it as cards, instead
+   of a pile of per-session summaries. → Appendix J
+6. **Traceable** — every taught claim points to its source chunk (slide, page, minute),
    or is labeled as the tutor's addition.
 
 ## What stays from the learning science, and what changes
@@ -66,17 +69,24 @@ unreadable or uncertain, and ask the learner to confirm before teaching from it.
 If the learner only names a topic, build the pack from your knowledge plus sources you
 look up, and mark which is which.
 
-### 2. Build the learning map (light, and once)
+### 2. Build the knowledge map (once; then it grows)
 
-From the pack, produce `learning-map.md`: 4–10 **capabilities** written as what the
-learner will be able to do, their dependencies, and the source chunks each rests on.
-For each capability, also note its **key causal links** (used to score teach-backs) and
-its **known common misconceptions** (from the material, past exams, or general
+From the pack, build `map.md` — the learner's single, living framework of the subject
+(Appendix J). Put in the **whole skeleton** now: every part and
+concept, unlearned ones marked ○, each a node of one or two sentences with its source
+chunks. Nodes are written as what the learner will understand or be able to do. In each
+node's hidden tutor comment, note its **key causal links** (used to score teach-backs)
+and its **known common misconceptions** (from the material, past exams, or general
 knowledge of how this topic is usually misunderstood).
 
-Ask at most three questions, in one message, only if the answer changes what you build:
-what it's for (exam? project? curiosity?), when, and what they already know. If there's
-an exam, also ask for past papers / homework / scope — then run exam back-solving.
+Ask at most four short questions, in one message, only those whose answer changes what
+you build: what it's for (exam? project? curiosity?), when, what they already know, and
+**which link format** they want in their notes (standard Markdown or Obsidian `[[ ]]`;
+default Markdown). If there's an exam, also ask for past papers / homework / scope —
+then run exam back-solving.
+
+If the learner already has summaries from earlier sessions, fold them into the map once
+(Appendix J § Migrating) — ask before moving or deleting old files.
 
 Don't write every lesson now. Lessons are generated when reached, from actual progress.
 
@@ -95,7 +105,10 @@ Every session follows Appendix B. In short:
    a coding course; teach-back if they'd rather explain than answer.
 5. **Close in two lines**: what they can now do, where the next session picks up. No
    assignment.
-6. **Update `progress.md` and `misconceptions.md` silently.**
+6. **Update the knowledge map**: edit the nodes touched (status, revised wording,
+   links), add to the cards this session produced, add one log line. Never create a
+   separate summary for the day. Tell the learner in one line what changed in the map.
+7. **Update `progress.md` and `misconceptions.md` silently.**
 
 Throughout, honor immediately: "I know this" (→ 2–3 question test-out), "just tell me"
 (→ answer, recorded as a hint rung), "let me explain it" (→ teach-back), "slower",
@@ -112,16 +125,23 @@ Appendix E and Appendix D § Sprint.
 ```
 <course-name>/              (for a coding course: a study/ folder inside their repo)
 ├── source-pack.md     # extracted material with provenance
-├── learning-map.md    # capabilities, dependencies, causal links, common misconceptions
-├── progress.md        # where they are + per-item mastery (tutor-maintained)
-├── misconceptions.md  # beliefs found, what they break, repair status
-├── exam-profile.md    # only when there's an exam: question types, topic weights, patterns
-└── notes/             # optional: lessons or summaries the learner asked to keep
+├── map.md             # THE learner-facing framework: whole subject, grows each session
+├── concepts/          # one card per concept: excerpts, explanation, examples, contrasts
+├── practice/          # one card per concept: questions, answers, feedback
+├── cases/             # applications: analyses, worked problems, code walkthroughs
+├── exam/              # only with an exam: mocks and debriefs
+├── exam-profile.md    # only with an exam: question types, topic weights, patterns
+├── progress.md        # tutor's notebook: where they are, per-item mastery, link style
+└── misconceptions.md  # tutor's notebook: beliefs found, what they break, repair status
 ```
 
-If there's no file system (plain chat), keep the same structure in the conversation and,
-at the end of a session, offer a compact progress block to paste next time — or use the
-platform's memory if one exists.
+Learner-facing = `map.md` + cards. Tutor-internal = `progress.md`, `misconceptions.md`.
+
+Without a file system: if a document tool with tabs is available, keep one document per
+subject (map in the first tab, cards in the others) and edit that same document every
+session. In plain chat, give the full updated `map.md` at the end of each session for
+the learner to save, plus a compact progress block — or use the platform's memory if one
+exists. Details: Appendix J § Where the map lives.
 
 ## Tone
 
@@ -345,7 +365,10 @@ the 4× in the MLP comes from.
 Next time: we'd start on FLOPs per token — or pick up wherever you want.
 ```
 
-Then update `progress.md`.
+Then update the knowledge map (Appendix J § Updating at the end of a session)
+and tell the learner in one line what changed, e.g. 「总脉络已更新：新增「欲望 vs 要求」，修订
+「镜像阶段」，练习 +3。」 Then update `progress.md` silently. Never produce a separate
+per-session summary table — the map is the summary.
 
 ---
 
@@ -424,7 +447,8 @@ never present it to the learner as tasks or reminders. If they ask to see it, sh
 ```markdown
 # Progress — <course>
 Last session: 2026-10-28 · Sessions: 4
-Where we are: learning-map capability 3 (multi-head attention), lesson half done
+Where we are: map node 3.2 (multi-head attention), lesson half done
+Link style: markdown
 Learner notes: knows PyTorch well; prefers code over equations; exam? none set
 
 ## Items
@@ -450,6 +474,10 @@ derivation). Keep items small enough that one question can probe one.
 | `durable` | solid on two occasions at least a few days apart, in different surface forms |
 
 A `durable` item that is later missed drops back to `shaky`.
+
+The map's status marks come from here: a node is ● when its items are `solid` or
+`durable`, ◐ when any is `new`, `gap` or `shaky`, ⚠ when one is a `misconception`, and
+○ when it hasn't been taught. The learner sees the marks, never this table.
 
 ### Picking warm-up questions
 
@@ -515,14 +543,14 @@ Ask once, in one message, for whatever exists. Don't block on missing pieces.
 | Homework / problem sets | high | teachers reuse their own problem shapes |
 | Scope statement / syllabus | medium | defines the boundary, not the weights |
 | Time spent in lecture per topic (from slides/transcript length) | low | rough prior when nothing else exists |
-| Nothing at all | — | say so; fall back to the learning map and label the plan as a guess |
+| Nothing at all | — | say so; fall back to the knowledge map and label the plan as a guess |
 
 Never invent past-exam content. If the learner describes a question from memory, record
 it as `source: learner recollection`.
 
 ### Step 2 — Build the exam profile (`exam-profile.md`)
 
-Tag every past question with: topic (→ learning-map capability), question type, points,
+Tag every past question with: topic (→ map node), question type, points,
 and the *skill it actually demands* (recall a definition / run a procedure / derive /
 choose a method / explain / debug / design).
 
@@ -712,7 +740,7 @@ the course involves code. Without those tools, fall back to code the learner pas
 | **Debugging as teaching** | On a failure, don't fix it. Read the trace with the learner and climb the hint ladder: where does it fail → what does the code assume there → what is actually true there. |
 | **Experiments for concepts** | Turn a concept into a 10-line experiment ("change the scaling to 1/d instead of 1/√d and plot the softmax entropy"). Seeing it beats being told. |
 | **Misconception checks in code** | When a misconception is suspected, the cheapest confirmation is often code: "write what you think the masked softmax does; let's check row sums." |
-| **Progress files in the repo** | Keep `progress.md` / `misconceptions.md` in a `study/` folder of their repo (gitignored if they prefer), so the context travels with the project. |
+| **Study files in the repo** | Keep the map, cards and `progress.md` / `misconceptions.md` in a `study/` folder of their repo (gitignored if they prefer), so the context travels with the project. Code walkthroughs go to `study/cases/`. |
 
 ### Session shape for a coding course
 
@@ -794,7 +822,7 @@ most of the talking.
 ### Scoring (silent, into `progress.md`)
 
 Check the explanation for the capability's **key causal links** (list them before the
-teach-back, from the learning map). For each: present and correct / present but wrong /
+teach-back, from the map node's tutor comment). For each: present and correct / present but wrong /
 missing. That gives item statuses directly. Teach-back evidence counts as strong
 evidence: a correct, unprompted causal explanation is good grounds for `solid`.
 
@@ -834,3 +862,142 @@ Where this skill deliberately departs from the original: it trades some enforced
 rigor (mandatory confidence ratings, pushed review schedules, refusing answers before an
 attempt) for a lower-pressure experience. The bet is that a learner who keeps coming back
 beats a perfectly designed regime they abandon. That bet should be tested.
+
+---
+
+## Appendix J — Knowledge map
+
+
+What the learner keeps from studying is not a pile of per-session summaries. It is one
+document that shows the whole subject, grows each session, and links out to the
+details. Per-session summary tables fragment the subject by date; nobody rereads them,
+and they never show how today's idea connects to last week's.
+
+So the learner-facing record has exactly two kinds of files:
+
+- **`map.md`** — the single overall framework. Edited every session, never duplicated.
+- **Cards** — one file per concept, practice set, or worked case, linked from map nodes.
+
+`progress.md` and `misconceptions.md` stay the tutor's internal notebook. The map is
+what the learner sees and rereads.
+
+### The map (`map.md`)
+
+````markdown
+# <Subject> · 总脉络
+主线：<one sentence: what the whole subject is about>
+来源：<source pack inputs> · 最近更新：<date>
+
+```mermaid
+graph LR
+  A["镜像阶段"] --> B["自我 / 主体"]
+  B --> C["大他者"]
+  C --> D["欲望"]
+  D --> E["对象 a"]
+```
+
+## 一、<part> ●
+- **<concept>** ● <one or two sentences in plain words: what it is, how it connects>
+  → [卡片](concepts/<concept>.md) · [练习 3 题](practice/<concept>.md) · [案例：…](cases/<case>.md)
+  <!-- tutor: src S3,S4 · causal links: … · common misconceptions: … -->
+- **<concept>** ◐ …（曾误解为「…」，已纠正；修订于 11-02）
+- **<concept>** ⚠ … 目前理解为「…」，待纠正
+- **<concept>** ○ （未学）<one line from the source so the shape is visible>
+
+## 二、<part> ◐
+…
+
+## 学习日志
+- 11-03 · 大他者、欲望 vs 要求（新增）· 镜像阶段（修订）
+- 11-02 · 镜像阶段、自我 vs 主体
+````
+
+#### Rules for the map
+
+1. **Organised by concept, never by date.** Dates live only in the log at the bottom,
+   one line per session, naming the nodes touched.
+2. **Whole skeleton from day one.** When the map is first built (from the source pack,
+   in workflow step 2), every part and concept goes in — unlearned ones marked ○ with a
+   one-line preview. The learner sees the full shape of the subject and where they are
+   in it from the first session.
+3. **Merge, don't append.** Each session edits existing nodes or attaches new ones under
+   the right parent. Never add a "today's summary" section or a new summary file.
+4. **Revise, don't stack.** When understanding changes — a misconception repaired, a
+   definition sharpened — rewrite the node and mark `（修订于 MM-DD）`. Do not keep the
+   old wording next to the new one.
+5. **Nodes stay short.** One or two sentences in the learner's own terms (reuse their
+   teach-back phrasing when it was right). Quotes, examples, derivations and questions
+   go to cards. The node's job is position and connection.
+6. **Status marks, no due dates.** ● solid / durable · ◐ new, shaky or gap · ○ not yet
+   studied · ⚠ open misconception (with the belief in a few words). Derived from
+   `progress.md`; never shown as tasks or reminders.
+7. **Size.** Keep `map.md` to about two screens. Past ~30 nodes, split by part into
+   sub-maps (`maps/<part>.md`) and keep only the parts, their status and one line each
+   on the main map. The Mermaid diagram shows parts and key relations, ~15 nodes max;
+   labels short and in quotes.
+8. **Provenance stays.** Each node's hidden tutor comment lists its source chunks
+   (`src S3,S4`) so a card or answer can cite slide/page/minute.
+9. **Tutor-only planning goes in the hidden comment** (`<!-- tutor: … -->`): the key
+   causal links used to score teach-backs, the common misconceptions for the topic. It
+   is invisible when the map is rendered and keeps the visible map clean.
+
+The map's shape follows the subject: a theory (Lacan, Foucault) is a concept network
+with relations between parts; a technical course (CS336) is closer to a tree of
+modules → capabilities. Same rules either way.
+
+### Cards
+
+Create a card only when there is something to put in it. Each card starts with a back
+link: `← [总脉络](../map.md) · 相关：[大他者](大他者.md) [欲望](欲望.md)`.
+
+| Folder | One card per | Holds |
+|---|---|---|
+| `concepts/` | concept | source excerpts with citation · the learner's explanation · examples **and** a contrast case · how it differs from look-alikes · misconceptions met and how they were repaired |
+| `practice/` | concept (not per day) | questions asked, the learner's answers, the feedback, newest at the top; generated questions labelled as generated |
+| `cases/` | case or application | applying the subject to something concrete — for a theory, analysing a person, text or event; for a technical course, a worked problem or a piece of the learner's code |
+| `exam/` | mock exam (only with an exam) | the mock, the learner's answers, the debrief by cause of lost points; the profile itself stays in `exam-profile.md` (see Appendix E) |
+
+Domains can rename folders when it reads better (`derivations/` for a maths course,
+`code/` for a coding course); say so once in the map header.
+
+When a session adds to a card, add to the existing card. A second card for the same
+concept is the same mistake as a second summary table.
+
+### Link format — ask once
+
+When the map is first created, ask in one line, alongside workflow step 2's questions:
+
+> 笔记里的链接用哪种格式？① 标准 Markdown `[卡片](concepts/x.md)`，任何编辑器都能点开；
+> ② Obsidian 双链 `[[x]]`，能看知识图谱，但离开 Obsidian 不好用。
+
+Record the answer in `progress.md`'s header (`Link style: markdown | wikilink`) and use
+it everywhere. No answer → standard Markdown. If they switch later, convert all files
+in one pass.
+
+### Updating at the end of a session
+
+Part of every session close (Appendix B § Closing):
+
+1. Update the nodes touched: status marks, revised wording, new links.
+2. Add or extend the cards the session produced (practice answers, a new example, a
+   case the learner analysed).
+3. Add one log line.
+4. Tell the learner in one line what changed, e.g. 「总脉络已更新：新增「欲望 vs 要求」，修订「镜像阶段」，练习 +3。」
+
+### Where the map lives
+
+| Environment | How |
+|---|---|
+| File access (Claude Code, Codex, Cursor, desktop with a connected folder, …) | Files in the study folder as above. For a coding course: `study/` inside the repo. |
+| No files, but a document tool with tabs (e.g. Claude's Docs artifacts) | One document per subject. First tab = the map; one tab per card group (概念 / 练习 / 案例), each card a heading inside it. Link nodes to tabs or headings. Edit the same document every session — never create a new one. |
+| Plain chat, nothing else | At session close, give the full updated `map.md` in one Markdown block for the learner to save over the old one (cards only when changed). Next session, ask them to paste it back. |
+
+### Migrating existing summaries
+
+If the learner already has per-session summary tables or notes from earlier sessions:
+
+1. Read them all; build the map once from their combined content plus the source pack.
+2. Move examples, quotes and questions into cards; keep the learner's own wording.
+3. Ask before deleting or moving the old files. Default: move them to `archive/`
+   untouched, so nothing is lost.
+4. Show the new map and say what came from where in one or two lines.

@@ -4,7 +4,7 @@ description: Low-pressure, exam-aware self-study tutor that works in the learner
 license: MIT
 metadata:
   author: Looffeeuu
-  version: "0.3"
+  version: "0.4"
   based-on: anything-to-course by lowwwbank (MIT)
 ---
 
@@ -32,7 +32,10 @@ Plenty of tools turn material into lessons and quizzes. This skill's bets are el
    tests as the judge, debugging as teaching. → `references/in-your-code.md`
 4. **Teach-back** — the learner explains, the tutor plays a sharp classmate who missed
    the lecture. → `references/teach-back.md`
-5. **Traceable** — every taught claim points to its source chunk (slide, page, minute),
+5. **One living knowledge map** — the learner keeps a single framework document that
+   grows each session, with concepts, practice and cases linked off it as cards, instead
+   of a pile of per-session summaries. → `references/knowledge-map.md`
+6. **Traceable** — every taught claim points to its source chunk (slide, page, minute),
    or is labeled as the tutor's addition.
 
 ## What stays from the learning science, and what changes
@@ -74,17 +77,24 @@ unreadable or uncertain, and ask the learner to confirm before teaching from it.
 If the learner only names a topic, build the pack from your knowledge plus sources you
 look up, and mark which is which.
 
-### 2. Build the learning map (light, and once)
+### 2. Build the knowledge map (once; then it grows)
 
-From the pack, produce `learning-map.md`: 4–10 **capabilities** written as what the
-learner will be able to do, their dependencies, and the source chunks each rests on.
-For each capability, also note its **key causal links** (used to score teach-backs) and
-its **known common misconceptions** (from the material, past exams, or general
+From the pack, build `map.md` — the learner's single, living framework of the subject
+(`references/knowledge-map.md`). Put in the **whole skeleton** now: every part and
+concept, unlearned ones marked ○, each a node of one or two sentences with its source
+chunks. Nodes are written as what the learner will understand or be able to do. In each
+node's hidden tutor comment, note its **key causal links** (used to score teach-backs)
+and its **known common misconceptions** (from the material, past exams, or general
 knowledge of how this topic is usually misunderstood).
 
-Ask at most three questions, in one message, only if the answer changes what you build:
-what it's for (exam? project? curiosity?), when, and what they already know. If there's
-an exam, also ask for past papers / homework / scope — then run exam back-solving.
+Ask at most four short questions, in one message, only those whose answer changes what
+you build: what it's for (exam? project? curiosity?), when, what they already know, and
+**which link format** they want in their notes (standard Markdown or Obsidian `[[ ]]`;
+default Markdown). If there's an exam, also ask for past papers / homework / scope —
+then run exam back-solving.
+
+If the learner already has summaries from earlier sessions, fold them into the map once
+(`references/knowledge-map.md` § Migrating) — ask before moving or deleting old files.
 
 Don't write every lesson now. Lessons are generated when reached, from actual progress.
 
@@ -103,7 +113,10 @@ Every session follows `references/session.md`. In short:
    a coding course; teach-back if they'd rather explain than answer.
 5. **Close in two lines**: what they can now do, where the next session picks up. No
    assignment.
-6. **Update `progress.md` and `misconceptions.md` silently.**
+6. **Update the knowledge map**: edit the nodes touched (status, revised wording,
+   links), add to the cards this session produced, add one log line. Never create a
+   separate summary for the day. Tell the learner in one line what changed in the map.
+7. **Update `progress.md` and `misconceptions.md` silently.**
 
 Throughout, honor immediately: "I know this" (→ 2–3 question test-out), "just tell me"
 (→ answer, recorded as a hint rung), "let me explain it" (→ teach-back), "slower",
@@ -120,16 +133,23 @@ optional timed mock with a debrief by cause of lost points. See
 ```
 <course-name>/              (for a coding course: a study/ folder inside their repo)
 ├── source-pack.md     # extracted material with provenance
-├── learning-map.md    # capabilities, dependencies, causal links, common misconceptions
-├── progress.md        # where they are + per-item mastery (tutor-maintained)
-├── misconceptions.md  # beliefs found, what they break, repair status
-├── exam-profile.md    # only when there's an exam: question types, topic weights, patterns
-└── notes/             # optional: lessons or summaries the learner asked to keep
+├── map.md             # THE learner-facing framework: whole subject, grows each session
+├── concepts/          # one card per concept: excerpts, explanation, examples, contrasts
+├── practice/          # one card per concept: questions, answers, feedback
+├── cases/             # applications: analyses, worked problems, code walkthroughs
+├── exam/              # only with an exam: mocks and debriefs
+├── exam-profile.md    # only with an exam: question types, topic weights, patterns
+├── progress.md        # tutor's notebook: where they are, per-item mastery, link style
+└── misconceptions.md  # tutor's notebook: beliefs found, what they break, repair status
 ```
 
-If there's no file system (plain chat), keep the same structure in the conversation and,
-at the end of a session, offer a compact progress block to paste next time — or use the
-platform's memory if one exists.
+Learner-facing = `map.md` + cards. Tutor-internal = `progress.md`, `misconceptions.md`.
+
+Without a file system: if a document tool with tabs is available, keep one document per
+subject (map in the first tab, cards in the others) and edit that same document every
+session. In plain chat, give the full updated `map.md` at the end of each session for
+the learner to save, plus a compact progress block — or use the platform's memory if one
+exists. Details: `references/knowledge-map.md` § Where the map lives.
 
 ## Tone
 

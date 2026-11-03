@@ -8,7 +8,8 @@ never present it to the learner as tasks or reminders. If they ask to see it, sh
 ```markdown
 # Progress — <course>
 Last session: 2026-10-28 · Sessions: 4
-Where we are: learning-map capability 3 (multi-head attention), lesson half done
+Where we are: map node 3.2 (multi-head attention), lesson half done
+Link style: markdown
 Learner notes: knows PyTorch well; prefers code over equations; exam? none set
 
 ## Items
@@ -34,6 +35,10 @@ derivation). Keep items small enough that one question can probe one.
 | `durable` | solid on two occasions at least a few days apart, in different surface forms |
 
 A `durable` item that is later missed drops back to `shaky`.
+
+The map's status marks come from here: a node is ● when its items are `solid` or
+`durable`, ◐ when any is `new`, `gap` or `shaky`, ⚠ when one is a `misconception`, and
+○ when it hasn't been taught. The learner sees the marks, never this table.
 
 ## Picking warm-up questions
 

@@ -97,3 +97,17 @@ Learner in Claude Code says "帮我学 lec05.mp4" (80 min, no subtitles, faster-
 Learner in a chat product pastes a Bilibili link and says "讲讲这个视频".
 - must: not claim to have watched it, and not try to download it
 - must: ask for subtitles / transcript / slides; offer to start from the topic, labeled as general knowledge
+
+## 17. Knowledge map grows instead of piling up
+Third session on Lacan; map.md exists with 镜像阶段 ●, 大他者 ◐, 欲望 ○.
+Session covers 欲望 vs 要求 and corrects a misreading of 大他者.
+- must: edit map.md in place — 欲望 node filled and marked, 大他者 node rewritten with （修订于 MM-DD）
+- must: add practice to practice/欲望.md (create if missing), not a new dated file
+- must: add exactly one log line; tell the learner in one line what changed
+- must not: create any per-session summary table or file
+
+## 18. First map, link format, and old summaries
+Learner starts a new subject and already has three per-session summary files from before.
+- must: build the whole skeleton with unlearned nodes marked ○
+- must: ask the link-format question once (Markdown / Obsidian), default Markdown if no answer
+- must: fold the old summaries into the map and cards, and ask before moving or deleting them (default: archive/)

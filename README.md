@@ -2,7 +2,7 @@
 
 **不想听课？把课件丢给它，按考试要的学。**
 
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue.svg) ![Version](https://img.shields.io/badge/version-0.3-orange.svg) ![Platforms](https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20Cursor%20%C2%B7%20Copilot%20%C2%B7%20OpenCode-8A2BE2.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue.svg) ![Version](https://img.shields.io/badge/version-0.4-orange.svg) ![Platforms](https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20Cursor%20%C2%B7%20Copilot%20%C2%B7%20OpenCode-8A2BE2.svg)
 
 anything-to-learn 是一个面向自主学习者的 Agent Skill。它把讲义、PPT、截图、板书照片、视频字幕、代码仓库乃至往年试卷整理成**可溯源的学习材料**，再以考试目标为约束，按你的节奏一对一教学。它记得你学到哪、哪里没懂，但不布置作业，也不推送复习计划。
 
@@ -45,6 +45,7 @@ anything-to-learn 是一个面向自主学习者的 Agent Skill。它把讲义�
 | **误解地图** | 记录"自信地错"背后的错误信念，先确认再纠正，并在它会连带影响的知识点之前先检查 |
 | **在你的代码里学** | 读你的作业仓库，就你自己写的代码提问；先预测再运行，用测试判对错；报错时带你排查，不替你改 |
 | **反向讲授** | 你来讲，它扮演一个缺课但很聪明的同学，追问关键步骤、抛出常见误解 |
+| **一张活的知识地图** | 只维护一份总脉络文档，每次学习都在上面修改和生长；概念卡、练习、案例作为卡片挂在节点上，不再每天堆一张零散的总结表 |
 | **处处可溯源** | 每个知识点标注出处（第几页 / 第几张幻灯片 / 第几分钟），它补充的内容单独标出 |
 
 同时，它保留了有研究支持的学习方法，但去掉了课堂式的压力：
@@ -301,18 +302,42 @@ python scripts/video_to_source.py lecture05.mp4 --no-transcribe      # 只截图
 3. **学习**：每次开场 1–2 道热身题，然后按合适的教法讲新内容。程序性知识、概念、证明、论文、代码、记忆类内容，各有一套教法。
 4. **练习**：有考试时用真题题型，学编程课时用你的代码，也可以换成你来讲。
 5. **两行收尾**：今天学会了什么，下次从哪接着。没有作业。
-6. **后台记账**：进度和误解地图静默更新，只用来决定下次的热身题和冲刺顺序。
+6. **更新知识地图**：在总脉络上修改今天碰到的节点、补充卡片、加一行日志，并用一句话告诉你改了什么。
+7. **后台记账**：进度和误解地图静默更新，只用来决定下次的热身题和冲刺顺序。
 
-所有状态都保存在你自己的学习文件夹里，是纯 Markdown，可以随时查看或迁移：
+### 知识地图
+
+你只需要看一份文件：`map.md`（总脉络）。它从第一天起就画出整个学科的骨架，没学的节点标 ○；之后每次学习都在原地修改，不另建总结。每个节点一两句话，链接到下面的卡片：
+
+```markdown
+## 一、想象界 ●
+- **镜像阶段** ● 婴儿在镜像中认出一个完整的"我"，但这个"我"本身是误认。
+  → [卡片](concepts/镜像阶段.md) · [练习 3 题](practice/镜像阶段.md) · [案例：社交媒体人设](cases/人设.md)
+- **自我 vs 主体** ◐ ……
+
+## 学习日志
+- 11-03 · 大他者、欲望 vs 要求（新增）· 镜像阶段（修订）
+```
+
+● 已掌握 · ◐ 学过但还不稳 · ⚠ 有待纠正的误解 · ○ 还没学。只有标记，没有到期日和提醒。
+
+第一次建地图时，它会问你笔记里的链接用标准 Markdown（任何编辑器都能点开）还是 Obsidian 双链 `[[ ]]`（能看知识图谱）。在没有文件夹的网页版里，它用一份多标签页文档代替：第一页是总脉络，其余页是卡片；纯聊天环境则在每次结束时给你更新后的完整 `map.md`。
+
+### 学习文件夹
+
+所有内容都是纯 Markdown，保存在你自己的学习文件夹里，可以随时查看或迁移：
 
 ```
 <course-name>/              （编程课放在作业仓库的 study/ 目录下）
-├── source-pack.md     # 提取的材料，每段标注出处
-├── learning-map.md    # 能力、依赖、关键因果链、常见误解
-├── progress.md        # 学到哪、每个知识点的掌握状态
-├── misconceptions.md  # 误解地图：错误信念、会影响什么、纠正进度
+├── map.md             # 总脉络：整个学科的框架，每次学习在原地更新
+├── concepts/          # 概念卡：原文摘录、你的解释、例子和反例、易混概念
+├── practice/          # 练习卡：按概念归档的题目、你的回答和反馈
+├── cases/             # 案例卡：用理论分析的人和事、例题、代码讲解
+├── exam/              # 有考试时才有：模考和复盘
 ├── exam-profile.md    # 有考试时才有：题型、考点权重、常见套路
-└── notes/             # 可选：你想留下的讲解或总结
+├── source-pack.md     # 提取的原始材料，每段标注出处
+├── progress.md        # tutor 内部笔记：掌握状态、链接格式
+└── misconceptions.md  # tutor 内部笔记：错误信念、会影响什么、纠正进度
 ```
 
 ## 学习科学依据
@@ -354,11 +379,12 @@ anything-to-learn/
 │   ├── misconceptions.md       # 误解地图：识别、确认、纠正、复查
 │   ├── in-your-code.md         # 在学习者自己的代码和文件里学习
 │   ├── teach-back.md           # 反向讲授
+│   ├── knowledge-map.md        # 知识地图：总脉络 + 卡片的结构与更新规则
 │   └── principles.md           # 学习科学依据（精简版）
 ├── scripts/
 │   └── video_to_source.py      # 可选：视频 → 字幕/转写 + 幻灯片截图 + 分段文字稿
 ├── evals/
-│   └── scenarios.md            # 16 个模拟学习者测试场景
+│   └── scenarios.md            # 18 个模拟学习者测试场景
 ├── dist/
 │   └── anything-to-learn-single.md   # 合并单文件版，供不支持 skill 的平台粘贴
 ├── README.md
@@ -367,12 +393,13 @@ anything-to-learn/
 
 ## 状态与路线图
 
-当前为 **v0.3 早期版本**，正在用 Stanford CS336 自学做第一轮实测。
+当前为 **v0.4 早期版本**，正在用 Stanford CS336 自学做第一轮实测。
 
 - [x] 任意格式材料摄取与溯源
 - [x] 隐式置信度推断、提示阶梯、热身题
 - [x] 应试反推、误解地图、代码内学习、反向讲授
 - [x] 本地视频解析（字幕 / Whisper 转写 + 幻灯片截图）
+- [x] 单一知识地图 + 卡片，取代每次学习的零散总结
 - [ ] 用真实课程录像测试视频解析（目前只用合成视频测过）
 - [ ] 在 Claude Code、Codex CLI、Cursor 上跑通全部 eval 场景
 - [ ] 补充一份真实学习记录作为示例
