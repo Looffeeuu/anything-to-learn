@@ -2,7 +2,7 @@
 
 **不想听课？把课件丢给它，按考试要的学。**
 
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue.svg) ![Version](https://img.shields.io/badge/version-0.4-orange.svg) ![Platforms](https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20Cursor%20%C2%B7%20Copilot%20%C2%B7%20OpenCode-8A2BE2.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue.svg) ![Version](https://img.shields.io/badge/version-0.5-orange.svg) ![Platforms](https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20Cursor%20%C2%B7%20Copilot%20%C2%B7%20OpenCode-8A2BE2.svg)
 
 anything-to-learn 是一个面向自主学习者的 Agent Skill。它把讲义、PPT、截图、板书照片、视频字幕、代码仓库乃至往年试卷整理成**可溯源的学习材料**，再以考试目标为约束，按你的节奏一对一教学。它记得你学到哪、哪里没懂，但不布置作业，也不推送复习计划。
 
@@ -266,6 +266,26 @@ git -C ~/.agents/skills/anything-to-learn pull    # 换成你的安装目录
 
 学习过程中随时可以说：**"这个我会了"**（两三道快测，过了就跳）、**"直接告诉我"**（给答案）、**"我只有 15 分钟"**、**"慢一点"**、**"难一点"**、**"考试会考什么？"**。
 
+### 什么时候会被调用
+
+这个 skill 只在你**想把东西学会**时启用：给了课程材料、要备考、说"学/复习/考我"，或者接着上次的进度。你只是想**把一件事做完**时（"指导我完成配置""帮我修 bug""写一份报告"），或者只问一个一次性的问题，它不会启用，AI 会直接帮你做。拿不准时，它会先问一句"你是想学会它，还是先把事情做完？"，不会直接建学习文件夹。
+
+觉得还是太容易触发，可以改成**只在你点名时才启用**：
+
+| 平台 | 设置 | 之后怎么调用 |
+|---|---|---|
+| Claude Code、Cursor 等 | 在 `SKILL.md` 开头的 frontmatter 里加一行 `disable-model-invocation: true` | 输入 `/anything-to-learn` |
+| Codex（CLI / IDE / ChatGPT） | 在 skill 文件夹里新建 `agents/openai.yaml`，写入下面的内容 | 输入 `$anything-to-learn`，或用 `/skills` 选择 |
+| Claude 网页版 / 桌面 / 手机 | 不用时在 设置 → Skills 里关掉它的开关 | 重新打开开关 |
+
+```yaml
+# agents/openai.yaml
+policy:
+  allow_implicit_invocation: false
+```
+
+关掉自动调用后，"继续上次的进度"这类话也不会再自动接上，需要你手动点名。
+
 ## 视频解析
 
 在能运行命令的 agent 里（Claude Code、Codex CLI、Gemini CLI、Cursor 等），skill 会用自带的 [`scripts/video_to_source.py`](scripts/video_to_source.py) 处理本地视频，全程在你的电脑上运行，不上传任何内容：
@@ -384,7 +404,7 @@ anything-to-learn/
 ├── scripts/
 │   └── video_to_source.py      # 可选：视频 → 字幕/转写 + 幻灯片截图 + 分段文字稿
 ├── evals/
-│   └── scenarios.md            # 18 个模拟学习者测试场景
+│   └── scenarios.md            # 20 个模拟学习者测试场景
 ├── dist/
 │   └── anything-to-learn-single.md   # 合并单文件版，供不支持 skill 的平台粘贴
 ├── README.md
@@ -393,7 +413,7 @@ anything-to-learn/
 
 ## 状态与路线图
 
-当前为 **v0.4 早期版本**，正在用 Stanford CS336 自学做第一轮实测。
+当前为 **v0.5 早期版本**，正在用 Stanford CS336 自学做第一轮实测。
 
 - [x] 任意格式材料摄取与溯源
 - [x] 隐式置信度推断、提示阶梯、热身题

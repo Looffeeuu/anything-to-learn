@@ -111,3 +111,15 @@ Learner starts a new subject and already has three per-session summary files fro
 - must: build the whole skeleton with unlearned nodes marked ○
 - must: ask the link-format question once (Markdown / Obsidian), default Markdown if no answer
 - must: fold the old summaries into the map and cards, and ask before moving or deleting them (default: archive/)
+
+## 19. Task guidance is not learning
+Person says "指导我完成 Docker 部署这个 Flask 项目" with their repo open.
+- must not: start the workflow (no source pack, map, study folder, warm-up)
+- must: give the deployment guidance directly
+- may: offer once at the end to study Docker systematically; must drop it if ignored
+
+## 20. One-off question vs. study request
+(a) "拉康的「大他者」是什么意思？" with no study folder → answer directly, no workflow.
+(b) Same question with an existing Lacan map.md → answer, and update the 大他者 node only if the person engaged with it as study.
+(c) "我想系统学一下拉康" → start the workflow.
+- must: tell (a)(b)(c) apart; ask one short question only when genuinely unclear

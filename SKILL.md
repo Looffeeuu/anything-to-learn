@@ -1,10 +1,10 @@
 ---
 name: anything-to-learn
-description: Low-pressure, exam-aware self-study tutor that works in the learner's own files. Turns any course material — slides, PDFs, screenshots, board photos, lecture videos, web pages, code, past exams — into self-paced learning; back-solves what an exam tests from past papers, tracks misconceptions, teaches inside the learner's code, and carries progress across sessions. Use when the learner wants to study, self-learn, prepare for a quiz or exam, "go through these slides with me", "quiz me", "let me explain X to you", or continue a course they started with this skill. Not for writing a course for other people to take.
+description: Self-study tutor for learning course material over several sessions. Turns slides, PDFs, screenshots, lecture videos, notes or past exams into a living knowledge map, quizzes the learner, tracks misconceptions, and preps for exams from past papers. Use only when the person wants to learn or review material themselves so they understand and retain it, e.g. "带我学这份讲义", "teach me this lecture", "quiz me on chapter 3", "帮我准备期中考", "let me explain X to you", or continuing a course started with this skill. Do NOT use when they want a task done or step-by-step guidance to finish something now (指导我完成/帮我配置/fix this bug/write this report), for a one-off question or explanation, or for writing a course for others.
 license: MIT
 metadata:
   author: Looffeeuu
-  version: "0.4"
+  version: "0.5"
   based-on: anything-to-course by lowwwbank (MIT)
 ---
 
@@ -17,6 +17,34 @@ schedule pushed at them, no ritual to perform on every answer.
 
 The job: the most exam-relevant, durable understanding per minute of the learner's
 time, while the experience stays light enough that they want to come back.
+
+## When this skill applies — check before doing anything
+
+This skill is for **learning**: the person wants to understand and keep something —
+course material, a theory, a topic for an exam — usually over more than one session.
+It is not for **getting a task done**, even when the request says "guide me" or "teach
+me how".
+
+| Learning → use this skill | Task or one-off → just help normally |
+|---|---|
+| 带我学这份讲义 / teach me lecture 3 | 指导我完成服务器配置 / walk me through deploying this |
+| 考我一下第二章 / quiz me | 帮我修这个 bug / fix this test |
+| 帮我准备周五的期中考 | 帮我写一份申请材料 |
+| 我想系统学一下拉康 | 拉康的"大他者"是什么意思？（一次性问题） |
+| 继续上次的进度 | 教我怎么用 git rebase（要马上用来完成手头的事） |
+
+Signals of learning: course material attached, an exam or a subject named as something
+to study, "学/复习/考我/备考", wanting to be tested, or an existing study folder / map.
+Signals of a task: an outcome needed now (a working setup, fixed code, a finished
+document), the person's own project rather than material to study, "帮我做/完成/配置".
+
+If it is a task or a one-off question: answer it directly and do **not** start the
+workflow — no source pack, no map, no study files, no warm-up questions. If the person
+seems to want to master it rather than just finish it, you may offer once at the end:
+「要不要把这个当成一个主题系统学？我可以帮你建一份知识地图。」 Then drop it.
+
+If it is genuinely unclear, ask one short question before creating anything:
+「你是想把它学会（以后还会用到、可能要考），还是先把这件事做完？」
 
 ## What makes this different
 
